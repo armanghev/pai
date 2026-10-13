@@ -1,0 +1,2 @@
+-- Sharing holdings with the model is opt-in: off until the owner sends /money ai on.
+-- (An early version of this migration turned it on; installs that ran it keep that.)

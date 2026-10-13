@@ -1,0 +1,31 @@
+[Unit]
+Description=Pai, the orange owl assistant
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=pai
+Group=pai
+WorkingDirectory=/opt/pai
+Environment=HOME=/opt/pai
+Environment=UV_CACHE_DIR=/opt/pai/.uv-cache
+Environment=UV_PYTHON_DOWNLOADS=never
+Environment=PYTHONUNBUFFERED=1
+ExecStart=/usr/local/bin/uv run --frozen --no-dev pai
+Restart=always
+RestartSec=5
+
+# Hardening. The code dir stays writable so /update can git pull and uv sync.
+MemoryMax=300M
+NoNewPrivileges=yes
+ProtectSystem=strict
+ReadWritePaths=/opt/pai
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+RestrictSUIDSGID=yes
+
+[Install]
+WantedBy=multi-user.target

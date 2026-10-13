@@ -1,0 +1,111 @@
+# Pai settings. Copy to config.toml (or, on Railway, paste into the PAI_CONFIG_TOML
+# variable) and fill in your own details. Non-secret settings only: tokens and keys live
+# in environment variables / .env (see the README).
+#
+# Anything you leave out uses the default shown here. Times are 24h local, days are
+# mon tue wed thu fri sat sun.
+
+timezone = "UTC"                 # IANA name, e.g. "America/Chicago", "Europe/London"
+db_path = "data/pai.db"
+notes_path = "data/notes.md"
+
+# About you and where Pai runs. These fill in the prompts, so Pai knows who it's helping.
+[profile]
+about = ""                       # e.g. "a student who works full time and takes evening classes"
+home = "a small computer in your owner's home"   # where the owl "lives"
+school = "college"               # writing level for reference drafts, e.g. "community college"
+
+[models]
+chat = "claude-haiku-5-5"        # free chat, reminders, quick lookups
+planner = "claude-sonnet-5-5"    # weekly plan, replan, research, /fix
+deep = "claude-opus-5-5"         # when you say "think hard"
+
+[budget]
+daily_usd = 1.00                 # Pai stops calling Claude for the day past this
+
+# Your week. Free study time = study windows minus work and classes.
+# Text Pai to override a single day ("I'm off Thursday").
+# [[schedule.work]]
+# days = ["mon", "tue", "wed", "thu", "fri"]
+# start = "09:00"
+# end = "17:00"                  # the after-work recap is sent when this ends
+
+# [[schedule.classes]]           # live class times; skip fully asynchronous classes
+# name = "BIO 101"
+# days = ["tue", "thu"]
+# start = "18:00"
+# end = "19:15"
+
+[[schedule.study]]
+days = ["mon", "tue", "wed", "thu", "fri"]
+start = "17:30"
+end = "22:00"
+
+[[schedule.study]]
+days = ["sat", "sun"]
+start = "10:00"
+end = "18:00"
+
+[jobs]
+briefing_time = "06:45"          # morning briefing
+weekly_plan_day = "sun"          # next week's study plan
+weekly_plan_time = "20:00"
+standup_day = "sun"              # side-project standup (needs GitHub)
+standup_time = "18:00"
+grade_watch_hours = 2            # Canvas grades and changes, between start and end
+grade_watch_start = "07:00"
+grade_watch_end = "23:00"
+recap_time = "21:00"             # evening recap
+# shift_time = "17:00"           # after-work recap; unset = when each work block ends
+habits_time = "21:15"            # habit check-in; streak report on habits_report_day
+habits_report_day = "sun"
+leads_day = "mon"                # weekly lead finder (needs [leads] area)
+leads_time = "09:00"
+review_day = "sun"               # weekly review
+review_time = "19:00"
+feeds_minutes = 30               # Canvas announcements and inbox
+price_time = "10:00"             # daily price-watch check
+drift_time = "18:30"             # vault ship check (needs [vault] path)
+heartbeat_minutes = 45           # background check-ins, 30-60
+quiet_start = "23:00"            # alerts arrive silently between these times
+quiet_end = "07:00"
+
+[weather]
+city = ""                        # e.g. "Chicago"; empty = no weather in the briefing
+units = "fahrenheit"             # or "celsius"
+
+[monitor]
+interval_minutes = 5
+temp_alert_c = 75                # host temperature alert
+disk_alert_pct = 85
+# [[monitor.sites]]              # uptime checks
+# name = "portfolio"
+# url = "https://example.com"
+
+[github]                         # needs GITHUB_TOKEN
+user = ""                        # your login; empty = looked up from the token
+repos = []                       # empty = every repo you pushed to in the last active_days
+active_days = 30
+poll_minutes = 30
+
+[digest]                         # Hacker News picks in the morning briefing
+enabled = true
+count = 5
+topics = []                      # e.g. ["ai", "python", "startup"]; empty = top stories
+
+[leads]                          # weekly lead finder; drafts only, Pai never contacts anyone
+enabled = true
+area = ""                        # e.g. "Austin, TX"; empty = off
+neighborhoods = []               # optional places inside the area to spread the search across
+pitch_for = "a web developer who builds sites for small businesses"
+count = 5
+# categories = ["restaurants and cafes", "auto repair shops", ...]  # rotated weekly
+
+[vault]                          # an Obsidian vault; leave path unset to turn vault features off
+# path = "~/Notes"               # must contain a projects/ folder
+inbox = "inbox"                  # Telegram captures land in <inbox>/Telegram YYYY-MM-DD.md
+quiet_days = 4                   # nudge when an active project has no commits for this long
+# git_sync = true                # path is a git clone: pull before reads, push captures
+
+[money]                          # read-only Plaid (see docs/plaid.md); needs PLAID_* env vars
+# labels = { mybank = "My Bank", broker = "My Broker" }   # display names for /money link labels

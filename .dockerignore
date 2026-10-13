@@ -1,0 +1,10 @@
+# Never ship local secrets or state into the image.
+.env
+.env.*
+config.toml
+data/
+.venv/
+.git/
+*.db
+*.db-*
+tests/

@@ -1,0 +1,21 @@
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+
+# secrets and local state: never commit
+.env
+.env.*
+!.env.example
+config.toml
+*.json.key
+service-account*.json
+data/
+*.db
+*.db-wal
+*.db-shm
